@@ -21,13 +21,6 @@
         <h5><a href="{% url 'blog_show' blog.id %}"> 阅读全文 >></a></h5>
 
         <div class="row-fluid">
-            <div class="span3">
-                <p class="muted">
-                    {% for tag in blog.tags.all %}
-                        <i class="icon-tag"></i>  <small>{{ tag }}</small>
-                    {% endfor %}
-                </p>
-            </div>
             <div class="span2 offset7">
                 {% get_comment_count for blog as comment_count %}
                 <a href="{% url 'blog_show' blog.id %}#cmt" title="comment"><i class=" icon-comment"></i>{{ comment_count }}</a>
@@ -63,16 +56,6 @@
                  </tbody>
                 </table>
             </blockquote>
-            {% block tags %}
-                <blockquote>
-                    <img src="/static/img/tags.png" alt="..."> <strong style=" font-size: 20px;">标签</strong></span><br>
-
-                    {% for tag in tags %}
-                        <a href="{% url 'blog_filter' tag.id %}" class="btn btn-small btn-info">{{ tag }}</a>
-                    {% endfor %}
-
-                </blockquote>
-            {% endblock %}
         </div>
     </div>
 {% endblock %}

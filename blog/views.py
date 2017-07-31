@@ -4,14 +4,13 @@ from __future__ import unicode_literals
 from django.shortcuts import render_to_response,render
 from django.template import RequestContext
 from django.http import Http404, HttpResponseRedirect,HttpResponse
-from blog.models import Article, Tag, Author, Category
+from blog.models import Article, Author, Category
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.template import loader
 
 
 def blog_list(request):
     blog_list = Article.objects.all().order_by('-publish_time')
-    tags = Tag.objects.all()
     categories = Category.objects.all()
 
     paginator = Paginator(blog_list, 5)
@@ -24,7 +23,7 @@ def blog_list(request):
         blogs = paginator.page(paginator.num_pages)
 
     return render(request, 'blog_list.html',
-                 {'blogs':blogs,'tags':tags,'categories':categories})
+                 {'blogs':blogs,'categories':categories})
 
 def blog_del(request, id=""):
     try:
@@ -41,20 +40,11 @@ def blog_del(request, id=""):
 def blog_show(request, id=''):
     try:
         blog = Article.objects.get(id=id)
-        tags = Tag.objects.all()
         categories = Category.objects.all()
     except Article.DoesNotExist:
         raise Http404
     return render_to_response("blog_show.html",
-           {"blog": blog, "tags": tags, "categories": categories})
-
-
-def blog_filter(request, id=''):
-    tags = Tag.objects.all()
-    tag = Tag.objects.get(id=id)
-    blogs = tag.article_set.all().order_by('-publish_time')
-    return render_to_response("blog_filter.html", {"blogs": blogs, "tag": tag, "tags": tags})
-
+           {"blog": blog, "categories": categories})
 
 def blog_category(request, id=''):
     categories = Category.objects.all()
