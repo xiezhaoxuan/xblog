@@ -1,0 +1,28 @@
+{% extends 'admin/change_form.html' %}
+{% load static %}
+
+{% block admin_change_form_document_ready %}
+{#{{ block.super }}#}
+    <script type="text/javascript">
+        (function ($) {
+        $(document).ready(function() {
+{#            $("button#b_test").click(function() {#}
+                htmlobj = $.ajax({url:'/blog/Article/Gt001',async:false});
+                var textNum1 = htmlobj.responseText;
+                $("#p_test2").text(textNum1);
+                var dataObj = eval("("+textNum1+")");
+                $("#p_test3").text(dataObj);
+
+{#            });#}
+        });
+            $(document).ready(function() {
+                $("button#b_test1").click(function() {
+                    $("p#p_test").show();
+                });
+            })
+        })(django.jQuery);
+    </script>
+
+    <p id="p_test2">变化的内容</p>
+    <p id="p_test3">2</p>
+{% endblock %}

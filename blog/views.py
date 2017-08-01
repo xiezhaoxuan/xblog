@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render_to_response,render
 from django.template import RequestContext
-from django.http import Http404, HttpResponseRedirect,HttpResponse
-from blog.models import Article, Author, Category
+from django.http import Http404, HttpResponseRedirect,HttpResponse,HttpResponseNotFound
+from blog.models import Article, Author, Category,SubCategory
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.template import loader
 
@@ -70,3 +70,16 @@ def blog_search(request):
         blogs = Article.objects.order_by('-id')
         return render_to_response("blog_list.html", {"blogs": blogs, "tags": tags},
             context_instance=RequestContext(request))
+
+
+def GetCategory(request,id=''):
+    if id == '001':  #从数据库中提取主类与子类的对应关系并返回
+        subCategories = SubCategory.objects.values('id','category_id')
+        subCategorieList = "["
+        for subCategorie in subCategories:
+            subCategorieList += '{"' + str(subCategorie['category_id']) + '":"' + str(subCategorie['id']) + '"}'
+            # subCategorieList.append([int(subCategorie['category_id']),int(subCategorie['id'])])
+        subCategorieList += "]"
+        return HttpResponse(subCategorieList)
+    else:
+        return HttpResponseNotFound('没有')

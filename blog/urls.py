@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^(?P<id>\d+)/$',views.blog_show,name='blog_show'),
    # url(r'^search/$',            'blog_search',     name='blog_search'),
     url(r'^category/(?P<id>\d+)/$', views.blog_category,name='blog_category'),
+    url(r'^Article/Gt(.{,3})/$',views.GetCategory), #admin修改文章页面用的
 ]
