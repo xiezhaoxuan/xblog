@@ -6,20 +6,39 @@
     <script type="text/javascript">
         (function ($) {
         $(document).ready(function() {
-{#            $("button#b_test").click(function() {#}
                 htmlobj = $.ajax({url:'/blog/Article/Gt001',async:false});
                 var textNum1 = htmlobj.responseText;
                 $("#p_test2").text(textNum1);
-                var dataObj = eval("("+textNum1+")");
-                $("#p_test3").text(dataObj);
+                textNum1 = textNum1.replace(/u/g,'');
+                textNum1 = textNum1.replace(/L/g,'');
+                re = new RegExp("\\\\","g");
+                textNum1 = textNum1.replace(re,"\\\\")
+                textNum1 = textNum1.replace(/}/g,'},')
+                textNum1 = textNum1.substring(0,textNum1.length-1);
+                textNum1 = textNum1.replace(/'/g,'"');
+                textNum1 = '{ "subCategory":[' + textNum1 + ']}'
+                var jsonNum1 = $.parseJSON(textNum1)
+                $("#p_test2").text(textNum1);
+                var length = 0;
+                for(var i in jsonNum1.subCategory)
+                {
+                    length++;
+                }
 
-{#            });#}
-        });
-            $(document).ready(function() {
-                $("button#b_test1").click(function() {
-                    $("p#p_test").show();
+                $("select#id_category").change(function () {
+                   var selectValue = $("select#id_category").val();
+                   $("#p_test3").text(selectValue);
+                   $("select#id_subcategory").empty();
+                   for(var num1=0;num1<length;num1++)
+                   {
+                        if(jsonNum1.subCategory[num1].category_id==selectValue)
+                        {
+                            $("select#id_subcategory").append("<option value='" + jsonNum1.subCategory[num1].id +
+                            "'>" + jsonNum1.subCategory[num1].category_name + "</option>");
+                        }
+                   }
                 });
-            })
+        });
         })(django.jQuery);
     </script>
 

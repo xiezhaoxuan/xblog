@@ -7,6 +7,7 @@ from django.http import Http404, HttpResponseRedirect,HttpResponse,HttpResponseN
 from blog.models import Article, Author, Category,SubCategory
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.template import loader
+from django.core import serializers
 
 
 def blog_list(request):
@@ -74,12 +75,8 @@ def blog_search(request):
 
 def GetCategory(request,id=''):
     if id == '001':  #从数据库中提取主类与子类的对应关系并返回
-        subCategories = SubCategory.objects.values('id','category_id')
-        subCategorieList = "["
-        for subCategorie in subCategories:
-            subCategorieList += '{"' + str(subCategorie['category_id']) + '":"' + str(subCategorie['id']) + '"}'
-            # subCategorieList.append([int(subCategorie['category_id']),int(subCategorie['id'])])
-        subCategorieList += "]"
-        return HttpResponse(subCategorieList)
+        # subCategories = SubCategory.objects.values('id','category_id','category_name')
+        subCategories = SubCategory.objects.all().only('id', 'category_id', 'category_name')
+        return HttpResponse(subCategories)
     else:
         return HttpResponseNotFound('没有')
