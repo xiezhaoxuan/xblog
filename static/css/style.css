@@ -307,7 +307,8 @@ html,body {
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 .container {
-    #max-width: 680px;
+    #max-width: 1280px;
+    width: ;
     height: auto;
     padding: 0 15px;
     #background-color: #FFAEB9;
@@ -329,8 +330,8 @@ body{
 
  #form_top{
     display:block;
-    bottom:100px;
-    right:100px;
+    bottom:70px;
+    right:10px;
     position:fixed;
     #color: #ECD672;
 }

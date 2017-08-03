@@ -13,6 +13,7 @@ from django.core import serializers
 def blog_list(request):
     blog_list = Article.objects.all().order_by('-publish_time')
     categories = Category.objects.all()
+    subcategories = SubCategory.objects.all()
 
     paginator = Paginator(blog_list, 5)
     page = request.GET.get('page')
@@ -24,7 +25,7 @@ def blog_list(request):
         blogs = paginator.page(paginator.num_pages)
 
     return render(request, 'blog_list.html',
-                 {'blogs':blogs,'categories':categories})
+                 {'blogs':blogs,'categories':categories,'subcategories':subcategories})
 
 def blog_del(request, id=""):
     try:
@@ -41,17 +42,27 @@ def blog_del(request, id=""):
 def blog_show(request, id=''):
     try:
         blog = Article.objects.get(id=id)
+        blog.viewCount += 1
+        blog.save()
+        subcategory = SubCategory.objects.get(id=blog.subcategory_id)
+        category = Category.objects.get(id=subcategory.category_id)
         categories = Category.objects.all()
+        subcategories = SubCategory.objects.all()
     except Article.DoesNotExist:
         raise Http404
     return render_to_response("blog_show.html",
-           {"blog": blog, "categories": categories})
+           {"blog": blog, "category":category,"subcategory":subcategory,
+            "categories": categories,"subcategories":subcategories})
 
 def blog_category(request, id=''):
     categories = Category.objects.all()
-    category = Category.objects.get(id=id)
-    blogs = Article.objects.filter(category=category)
-    return render_to_response("blog_category_filter.html", {"blogs": blogs, "category": category, "categories": categories})
+    subcategories = SubCategory.objects.all()
+    subcategory = SubCategory.objects.get(id=id)
+    category = Category.objects.get(id=subcategory.category_id)
+    blogs = Article.objects.filter(subcategory=subcategory)
+    return render_to_response("blog_category_filter.html", {"blogs": blogs, "subcategory": subcategory,
+                                                            "category":category,
+                                                            "categories": categories,"subcategories":subcategories})
 
 
 def blog_show_comment(request, id=''):
@@ -77,6 +88,11 @@ def GetCategory(request,id=''):
     if id == '001':  #从数据库中提取主类与子类的对应关系并返回
         # subCategories = SubCategory.objects.values('id','category_id','category_name')
         subCategories = SubCategory.objects.all().only('id', 'category_id', 'category_name')
-        return HttpResponse(subCategories)
+        text = '{"subCategory":['
+        for i in subCategories:
+            text += '{"id":' + str(i.id) + ',"category_id":' + str(i.category_id) + ',"category_name":"' + \
+                    i.category_name + '"},'
+        text = text[:-1] + ']}'
+        return HttpResponse(text)
     else:
         return HttpResponseNotFound('没有')

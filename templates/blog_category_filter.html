@@ -1,19 +1,25 @@
 {% extends "blog_base.html" %}
 {% load comments %}
 
-{% block title %} Categoty search: {{ category.category_name }} {% endblock %}
+{% block title %} {{ category.category_name }}-{{ subcategory.category_name }} {% endblock %}
 
 {% block article %}
 <article class='content-main'>
+
+    <a href="/">首页</a>
+    >>{{ category.category_name }}-{{ subcategory.category_name }}
+    <hr>
+
     {% for blog in blogs %}
         <h3><a href="{% url 'blog_show' blog.id %}">{{ blog.caption }}</a></h3>
         <div class="row-fluid">
             <div class="span3">
                 <p class="muted"><i class="icon-time"></i><small> {{ blog.publish_time|date:"m-d Y H:m:s"  }}</small></p>
             </div>
-            <div class="span2 offset7">
-                {% get_comment_count for blog as comment_count %}
-                <a href="{% url 'blog_show' blog.id %}#cmt" title="comment"><i class=" icon-comment"></i>{{ comment_count }}</a>
+            <div class="offset7">
+            {% get_comment_count for blog as comment_count %}
+            <nobr><small>浏览({{ blog.viewCount }})&nbsp&nbsp&nbsp&nbsp&nbsp</small></nobr>
+            <a href="{% url 'blog_show' blog.id %}"><small>评论({{ comment_count }})</small></a>
             </div>
         </div>
         <hr class="soften">
@@ -26,20 +32,19 @@
 {% block aside %}
     <div class="aside">
         <div class="pinned">
-            <img src="/static/img/logo.jpg" alt="..." class="img-circle">
+            <img src="/static/img/logo2.jpg" alt="..." class="img-circle">
             <h1></h1>
             <blockquote>
-                <p>怕什么 <strong>真理</strong>无穷，</p>
-                <p>进<strong>一步</strong>有一步的<strong>欢喜</strong>。</p>
-                <small>胡适</small>
+                <p><strong>天行健</strong>，</p>
+                <p><small><strong>君子以自强不息。</strong></small></p>
             </blockquote>
             <blockquote>
-                <img src="/static/img/category.png" alt="..."> <strong style=" font-size: 20px;">分类</strong></span>
-                <table class="table table-hover table-condensed">
-                <tbody>
-                    <tr class="active"></tr>
-                    <td><a href="{% url 'blog_category' category.id %}"><strong style="color:#009ACD;">{{ category }}</strong></a></td>
-                </tbody>
+{#                <img src="/static/img/category.png" alt="..."> <strong style=" font-size: 20px;">文章分类</strong></span>#}
+{#                <table class="table table-hover table-condensed">#}
+{#                <tbody>#}
+{#                    <tr class="active"></tr>#}
+{#                    <td><a href="{% url 'blog_category' category.id %}"><strong style="color:#009ACD;">{{ category }}</strong></a></td>#}
+{#                </tbody>#}
                 </table>
             </blockquote>
         </div>

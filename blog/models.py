@@ -37,6 +37,7 @@ class Article(models.Model):
     caption = models.CharField(max_length=30, verbose_name=u'标题')
     publish_time = models.DateTimeField(auto_now_add=True, verbose_name=u'发表时间')
     update_time = models.DateTimeField(auto_now=True, verbose_name=u'更新时间')
+    viewCount = models.IntegerField(auto_created=1,default=0,verbose_name='浏览次数')
     author = models.ForeignKey(Author, verbose_name=u'作者')
     category = models.ForeignKey(Category, blank=True, verbose_name=u'主分类')
     subcategory = models.ForeignKey(SubCategory,blank=True,verbose_name=u'子分类')

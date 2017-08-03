@@ -2,30 +2,39 @@
 
 {% load comments %}
 
-{% block title %} 天行健 {% endblock %}
+{% block title %} 首页-谢兆轩的官方网站 {% endblock %}
 
 {% block article %}
 <article class='content-main'>
 
-
+    <a href="/">首页</a>
+    <hr>
     {% for blog in blogs %}
         <h3><a href="{% url 'blog_show' blog.id %}">{{ blog.caption }}</a></h3>
         <p class="muted">
             <i class="icon-user"></i><small> {{ blog.author }}</small>
             <i class="icon-time"></i><small> {{ blog.publish_time|date:"m-d Y H:m:s" }}</small>
-            <i class="icon-briefcase"></i>  <small>{{ blog.category }}</small>
+            <i class="icon-briefcase"></i>  <small>{{ blog.category }}-{{ blog.subcategory }}</small>
         </p>
         {% load markup_tags %}
 
         <div>{{ blog.content|truncatechars:200}} </div>
-        <h5><a href="{% url 'blog_show' blog.id %}"> 阅读全文 >></a></h5>
-
-        <div class="row-fluid">
-            <div class="span2 offset7">
-                {% get_comment_count for blog as comment_count %}
-                <a href="{% url 'blog_show' blog.id %}#cmt" title="comment"><i class=" icon-comment"></i>{{ comment_count }}</a>
-            </div>
+        <h5>
+                <a href="{% url 'blog_show' blog.id %}"> 阅读全文 >></a>
+        </h5>
+        <div class="offset7">
+            {% get_comment_count for blog as comment_count %}
+{#                <a href="{% url 'blog_show' blog.id %}#cmt" title="comment"><i class=" icon-comment"></i>{{ comment_count }}</a>#}
+            <nobr><small>浏览({{ blog.viewCount }})&nbsp&nbsp&nbsp&nbsp&nbsp</small></nobr>
+            <a href="{% url 'blog_show' blog.id %}"><small>评论({{ comment_count }})</small></a>
         </div>
+
+{#        <div class="row-fluid">#}
+{#            <div class="span2 offset7">#}
+{#                {% get_comment_count for blog as comment_count %}#}
+{#                <a href="{% url 'blog_show' blog.id %}#cmt" title="comment"><i class=" icon-comment"></i>{{ comment_count }}</a>#}
+{#            </div>#}
+{#        </div>#}
 
         <hr>
     {% endfor %}
@@ -44,14 +53,14 @@
                 <p><small><strong>君子以自强不息。</strong></small></p>
             </blockquote>
             <blockquote>
-                <img src="/static/img/category.png" alt="..."> <strong style=" font-size: 20px;">文章分类</strong></span>
-                <table class="table table-hover table-condensed">
-                 <tbody>
+{#                <img src="/static/img/category.png" alt="..."> <strong style=" font-size: 20px;">文章分类</strong></span>#}
+{#                <table class="table table-hover table-condensed">#}
+{#                 <tbody>#}
 
-                    {% for category in categories %}
-                        <tr class="active"></tr>
-                        <td><a href="{% url 'blog_category' category.id %}"><strong style="color:#009ACD;">{{ category }}</strong></a></td>
-                    {% endfor %}
+{#                    {% for category in categories %}#}
+{#                        <tr class="active"></tr>#}
+{#                        <td><a href="{% url 'blog_category' category.id %}"><strong style="color:#009ACD;">{{ category }}</strong></a></td>#}
+{#                    {% endfor %}#}
 
                  </tbody>
                 </table>

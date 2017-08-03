@@ -30,7 +30,7 @@
                     <span class="icon-bar"></span>
                 </a>
                 <span class="brand">
-                    <a href="#" style="color:#5eb95e;font-size: 25px;">谢兆轩的官方网站</a>
+                    <a href="/" style="color:#5eb95e;font-size: 25px;">谢兆轩的官方网站</a>
                 </span>
 
                 <ul class="nav">
@@ -44,6 +44,23 @@
                             首页
                         </a>
                     </li>
+
+                    {% for category in categories %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                {{ category.category_name }}
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% for subcategory in subcategories %}
+                                    {% if subcategory.category_id == category.id %}
+                                        <li class="divider"></li>
+                                        <li><a href="{% url 'blog_category' subcategory.id%}">{{ subcategory.category_name }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
 
                     {% comment %}
                     <li>
@@ -93,6 +110,9 @@
                 <h4 class="modal-title" id="myModalLabel">关于作者</h4>
                 </div>
                 <div class="modal-body">
+                    <strong>姓名: 谢兆轩</strong><br><br>
+                    <strong>年龄: 30</strong><br><br>
+                    <strong>目前职位: 硬件工程师</strong><br><br>
                     <address>
                         <strong>Email:</strong><br>
                         <a href="mailto:#">991681386@qq.com</a>

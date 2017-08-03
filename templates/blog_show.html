@@ -6,6 +6,14 @@
 
 {% block article %} 
 <article class="content-main">
+
+    <a href="/">首页</a>
+    >>
+    <a href="{% url 'blog_category' subcategory.id%}">{{ category.category_name }}-{{ subcategory.category_name }}</a>
+    >>正文
+
+    <hr>
+
     {% block article_title %}
         <h2>{{ blog.caption }}</h2>
     {% endblock %}
@@ -49,10 +57,20 @@
 </tr>
 <hr class="soften">
 
-<!-- UY BEGIN -->
-<div id="uyan_frame"></div>
-<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2140150"></script>
-<!-- UY END -->
+{#<!-- UY BEGIN -->#}
+{#<div id="uyan_frame"></div>#}
+{#<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2140150"></script>#}
+{#<!-- UY END -->#}
+
+    <!--高速版-->
+<div id="SOHUCS" sid="{{ blog.id }}"></div>
+<script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cyt92ocPU',
+conf: 'prod_c283f2736ce400077a5e26d5bb09aa3f'
+});
+</script>
 
 {% endblock %}
 
