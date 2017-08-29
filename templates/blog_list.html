@@ -9,6 +9,7 @@
 
     <a href="/">首页</a>
     <hr>
+
     {% for blog in blogs %}
         <h3><a href="{% url 'blog_show' blog.id %}">{{ blog.caption }}</a></h3>
         <p class="muted">
@@ -18,7 +19,7 @@
         </p>
         {% load markup_tags %}
 
-        <div>{{ blog.content|truncatechars:200}} </div>
+        <div>{{ blog.content|apply_markup:"markdown"|truncatechars:200}} </div>
         <h5>
                 <a href="{% url 'blog_show' blog.id %}"> 阅读全文 >></a>
         </h5>
@@ -38,9 +39,9 @@
 
         <hr>
     {% endfor %}
-
 </article>
     {% include "page.html" %}
+
 {% endblock %}
 
 {% block aside %}

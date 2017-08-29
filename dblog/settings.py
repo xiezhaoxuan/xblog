@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import django
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DJANGO_DIR = django.__file__
+DJANGO_DIR = os.path.split(DJANGO_DIR)[0]
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django_comments',
     'django_markup',
-    'django_markdown',
+    'markdownx',
     'blog',
 ]
 
@@ -61,6 +64,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
+            os.path.join(DJANGO_DIR,'forms\\templates'),
+# D:\Program Files\Python\Python27\Lib\site-packages\django\forms\templates\django\forms\widgets\textarea.html
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -85,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'dblog2',                      # Or path to database file if using sqlite3.
         'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': '3585779',                  # Not used with sqlite3.
+        'PASSWORD': '123456',                  # Not used with sqlite3.
         'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -129,7 +134,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 #STATIC_ROOT = 'f:\\myself\\2017.6\\html\\django\\blog\\xiezhaoxuan\\dblog\\static\\'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
 

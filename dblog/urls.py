@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^comments/',include('django_comments.urls')),
     #url('^markdown/',include('django_markdown.urls')),
+    url(r'^markdownx/',include('markdownx.urls')),
 
     url(r'^blog/', include('blog.urls')),
     url(r'^$', views.blog_list, name='blog_list'),

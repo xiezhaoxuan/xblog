@@ -31,7 +31,6 @@ class Author(models.Model):
     def __unicode__(self):
         return u'%s' % (self.name)
 
-
 class Article(models.Model):
     """docstring for Article"""
     caption = models.CharField(max_length=30, verbose_name=u'标题')
@@ -42,5 +41,4 @@ class Article(models.Model):
     category = models.ForeignKey(Category, blank=True, verbose_name=u'主分类')
     subcategory = models.ForeignKey(SubCategory,blank=True,verbose_name=u'子分类')
     content = models.TextField(verbose_name=u'内容')
-
 
